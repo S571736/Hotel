@@ -66,14 +66,14 @@ namespace HotelLibrary
         }
     }
 
-    public class Maintenance
+    public class Services
     {
         public maintenanceType mt { get;  set; }
         public int roomId { get;  set; }
         public string note { get;  set; }
         public maintenanceStatus ms { get;  set; }
 
-        public Maintenance(maintenanceType mt, int roomId, maintenanceStatus ms, string note)
+        public Services(maintenanceType mt, int roomId, maintenanceStatus ms, string note)
         {
             this.mt = mt;
             this.roomId = roomId;
