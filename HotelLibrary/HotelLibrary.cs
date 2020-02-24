@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace HotelLibrary
 {
@@ -180,19 +182,27 @@ namespace HotelLibrary
     public class DBService
 
     {
-        static string host = "";
-        static string database = "";
-        static string user = "";
-        static string pass = "";
-        static string connstring = "Data Source="
-                            + host
-                            + ";Initial Catalog="
-                            + database
-                            + ";User ID="
-                            + user
-                            + ";Password"
-                            + pass;
+        static string connstring = "Server=tcp:hotel-server-dat154.database.windows.net,1433;Initial Catalog = HotelDB; Persist Security Info=False;User ID = admin1; Password={your_password }; MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout = 30;";
 
-}
+        public DBService()
+        {
+
+        }
+
+        List<HotelRoom> DBgetRooms()
+        {
+            List<HotelRoom> rooms = new List<HotelRoom>();
+
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                SqlDataReader rdr = null;
+
+                conn.Open();
+                
+            }
+
+            return rooms;
+        }
+    }
 
 }
