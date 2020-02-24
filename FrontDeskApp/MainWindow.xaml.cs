@@ -52,7 +52,7 @@ namespace FrontDeskApp
         //    {
         //        if(room.roomId == roomId)
         //        {
-        //            Maintenance m = new Maintenance(mt, roomId, maintenanceStatus.Todo, "Nothing to specify");
+        //            Services m = new Services(mt, roomId, maintenanceStatus.Todo, "Nothing to specify");
         //        }
         //    }
         //}
@@ -62,7 +62,7 @@ namespace FrontDeskApp
         //    {
         //        if (room.roomId == roomId)
         //        {
-        //            Maintenance m = new Maintenance(mt, roomId, maintenanceStatus.Todo, note);
+        //            Services m = new Services(mt, roomId, maintenanceStatus.Todo, note);
         //        }
         //    }
         //}

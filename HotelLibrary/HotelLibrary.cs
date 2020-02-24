@@ -4,6 +4,7 @@ using System.Linq;
 
 namespace HotelLibrary
 {
+
     public enum Size
     {
         Single,
@@ -68,10 +69,10 @@ namespace HotelLibrary
 
     public class Services
     {
-        public maintenanceType mt { get;  set; }
-        public int roomId { get;  set; }
-        public string note { get;  set; }
-        public maintenanceStatus ms { get;  set; }
+        public maintenanceType mt { get; set; }
+        public int roomId { get; set; }
+        public string note { get; set; }
+        public maintenanceStatus ms { get; set; }
 
         public Services(maintenanceType mt, int roomId, maintenanceStatus ms, string note)
         {
@@ -84,9 +85,9 @@ namespace HotelLibrary
 
     public class User
     {
-        public int userId { get;  set; }
-        public string firstName { get;  set; }
-        public string surName { get;  set; }
+        public int userId { get; set; }
+        public string firstName { get; set; }
+        public string surName { get; set; }
         public User(int userId, string firstName, string surName)
         {
             this.userId = userId;
@@ -103,7 +104,7 @@ namespace HotelLibrary
 
         public bookingService()
         {
-            bookings = new List<Booking> () ;//ServerKall();
+            bookings = new List<Booking>();//ServerKall();
             rooms = new List<HotelRoom>(); //ServerKall();   //bare tull etter = , errorfiks
         }
         public Booking newBooking(Size size, int nbeds, int customerId, DateTime to, DateTime from, Status status)
@@ -175,5 +176,23 @@ namespace HotelLibrary
 
 
     }
+
+    public class DBService
+
+    {
+        static string host = "";
+        static string database = "";
+        static string user = "";
+        static string pass = "";
+        static string connstring = "Data Source="
+                            + host
+                            + ";Initial Catalog="
+                            + database
+                            + ";User ID="
+                            + user
+                            + ";Password"
+                            + pass;
+
+}
 
 }
