@@ -1,0 +1,53 @@
+﻿<Window x:Class="FrontDeskApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FrontDeskApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Frame x:Name="_mainFrame" />
+    <Grid Name="FrontDeskGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="20"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <TextBlock 
+            Text="Choose an option"
+            Grid.Row="1"
+            Margin="10" 
+            Foreground="Black"
+            TextAlignment="Center"
+            HorizontalAlignment="Center"/>
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button Name="Reservation"
+            Content="Reservations"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Margin="20,0,20,0"
+            Click="Reservation_Click" 
+            Background="LightGray">
+            </Button>
+            <Button Name="Services"
+            Content="Services"
+            Grid.Column="2"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Margin="20,0,20,0"
+            Click="Services_Click"
+            Background="LightGray">
+            </Button>
+        </Grid>
+    </Grid>
+</Window>
