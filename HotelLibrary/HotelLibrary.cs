@@ -193,13 +193,17 @@ namespace HotelLibrary
         {
             List<HotelRoom> rooms = new List<HotelRoom>();
 
+            /*
+            TODO: Add a connection to the database
             using (SqlConnection conn = new SqlConnection(connstring))
             {
                 SqlDataReader rdr = null;
 
-                conn.Open();
+                
                 
             }
+            */
+
 
             return rooms;
         }
