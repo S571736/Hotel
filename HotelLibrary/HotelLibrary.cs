@@ -219,8 +219,6 @@ namespace HotelLibrary
             return availableRooms.First();
         }
 
-
-
     }
 
 }

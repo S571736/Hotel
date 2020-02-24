@@ -21,7 +21,7 @@ namespace WebAppClient
 
         List<Booking> myBookings = new List<Booking>();
 
-        int myId = 1; 
+        int myId = 1;   //hente inn fra db
      
 
         protected void Page_Load(object sender, EventArgs e)
@@ -44,7 +44,7 @@ namespace WebAppClient
             }
             html.Append("</tr>");
 
-
+                
             //Building the Data rows.
             foreach (DataRow row in dt.Rows)
             {
@@ -77,10 +77,10 @@ namespace WebAppClient
 
             foreach (Booking b in bs.bookings)
             {
-                //if(b.customerId == myId)
-                //{
+                if(b.customerId == myId)
+                {
                     myBookings.Add(b);
-                //}
+                }
 
             }
 

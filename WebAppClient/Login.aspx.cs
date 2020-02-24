@@ -14,6 +14,17 @@ namespace WebFormsIdentity
             var manager = new UserManager<IdentityUser>(userStore);
 
             var user = new IdentityUser() { UserName = UserName.Text };
+
+
+            //hente ut userID fra cookies
+
+
+            user.Id = Response.Cookies["user"].Value;
+
+            
+
+
+
             IdentityResult result = manager.Create(user, Password.Text);
 
             if (result.Succeeded)

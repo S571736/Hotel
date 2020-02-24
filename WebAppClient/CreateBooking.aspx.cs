@@ -13,6 +13,7 @@ namespace WebAppClient.CreateBooking
     {
 
         bookingService bs = new bookingService();
+        HotelRoom room;
 
 
 
@@ -57,32 +58,8 @@ namespace WebAppClient.CreateBooking
             set { NBeds = value; }
         }
 
-
-
-
         protected void Page_Load(object sender, EventArgs e)
         {
-
-
-
-           
-            //DropDownList DropList = new DropDownList();
-
-            //DropList.ID = "nbeds";
-            //DropList.AutoPostBack = true;
-
-            //DropList.DataBind();
-
-
-            //set date
-            //bruker velger date, beds size 
-
-            //skriver ut et rom som er ledig
-            //button 
-            //book this room - db
-
-            //--- Show results in page.
-        
 
 
 
@@ -100,6 +77,22 @@ namespace WebAppClient.CreateBooking
             return info;
         }
 
+        public string displayBookedRoom(Booking booking, List<HotelRoom> rooms)
+        {
+
+
+            foreach (HotelRoom r in rooms)
+            {
+                if (booking.roomId == r.roomId)
+                {
+                    room = r;
+                }
+            }
+
+            return "Room ID: " + room.roomId + "room type: "+ room.size + "number of beds:" + room.nBeds;
+            
+        }
+
         protected void Button1_Click(object sender, EventArgs e)
         {
     
@@ -108,21 +101,38 @@ namespace WebAppClient.CreateBooking
 
            HotelRoom theRoom = bs.firstValidRoomFromList(availablerooms);
 
-            MessageBox.Show("This room is available, and suits your preferences: " + showRoom(theRoom));
-
+ 
             //Book.Enabled = true;
             //Book.Visible = true;
 
-           // if(bs.firstValidRoomFromList(availablebs.rooms) != null)
+            MessageBoxResult result = MessageBox.Show("This room is available, and suits your preferences: " + showRoom(theRoom) + "/n Do you want to book this room?", "My App", MessageBoxButton.YesNoCancel);
+            switch (result)
+            {
+                case MessageBoxResult.Yes:
+
+                    bs.newBooking(theRoom.size, theRoom.nBeds, myb)
+              
+
+                    MessageBox.Show("You have now booked the room: " + showRoom(theRoom), "My App");
+                    break;
+                case MessageBoxResult.No:
+                    MessageBox.Show("Oh well, too bad!", "My App");
+                    break;
+                case MessageBoxResult.Cancel:
+                    MessageBox.Show("Nevermind then...", "My App");
+                    break;
+            }
+
+            // if(bs.firstValidRoomFromList(availablebs.rooms) != null)
             //{
 
-                //Create button - Yes it is available, do you want to book?
-                //onmouseclick - makeReservation.
+            //Create button - Yes it is available, do you want to book?
+            //onmouseclick - makeReservation.
 
-              //  MessageBox.Show("Do you want to book a room from: "+  DateFrom.Date.ToString() + " to " +  DateTo.Date.ToString() + " with "  + NBeds +  " beds and type: " +Size.ToString());
+            //  MessageBox.Show("Do you want to book a room from: "+  DateFrom.Date.ToString() + " to " +  DateTo.Date.ToString() + " with "  + NBeds +  " beds and type: " +Size.ToString());
 
 
-                string name = "yes";
+            string name = "yes";
                 Button showButton = new Button();
 
                 showButton.CommandName = name;
@@ -137,7 +147,6 @@ namespace WebAppClient.CreateBooking
 
 
         }
-
         protected void Button2_Click(object sender, EventArgs e)
         {
 
