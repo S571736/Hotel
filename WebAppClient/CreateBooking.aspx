@@ -11,16 +11,17 @@
     </style>
 </head>
 <body>
-    <form id="form1" runat="server" >
+    <form id="form1" runat="server">
         <div>
         </div>
         <p>
-            <asp:Label ID="Label1" runat="server" Text="Create Booking"></asp:Label>
+            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         </p>
         Find Room <br />
     <br />
-        <div style="height: 26px; width: 170px">
-    <asp:DropDownList ID="DropDownList1" runat="server"  >
+    <br />
+    Number of beds:<br />
+    <asp:DropDownList ID="DropDownList1" runat="server" >
         <asp:ListItem Selected="True" Value="1"> 1 bed </asp:ListItem>
         <asp:ListItem Value="2"> 2 beds </asp:ListItem>
         <asp:ListItem Value="2"> 3 beds </asp:ListItem>
@@ -33,18 +34,13 @@
             <asp:ListItem Value="Suite">Suite</asp:ListItem>
         </asp:DropDownList>
     <br />
-        </div>
 
-
-    <br />
-    Number of beds:<br />
 
 
         <br />
         Date from:
         <br />
         
-
       
         
         

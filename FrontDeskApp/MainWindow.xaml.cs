@@ -26,54 +26,58 @@ namespace FrontDeskApp
             InitializeComponent();
         }
 
-        void DrawMenu()
-        {
+        //void DrawMenu()
+        //{
 
-        }
+        //}
 
-        void ChangeStatus(int roomId, Status status)
-        {
-            foreach(Booking b in bookings)
-            {
-                if (b.roomId == roomId)
-                {
-                    b.status = status;
-                    if(status == Status.CheckedOut)
-                    {
-                        CallService(b.roomId, maintenanceType.Cleaning, "Client checked out, ready for cleaning");
-                    }
-                }
-            }
-        }
+        //void ChangeStatus(int roomId, Status status)
+        //{
+        //    foreach(Booking b in bookings)
+        //    {
+        //        if (b.roomId == roomId)
+        //        {
+        //            b.status = status;
+        //            if(status == Status.CheckedOut)
+        //            {
+        //                CallService(b.roomId, maintenanceType.Cleaning, "Client checked out, ready for cleaning");
+        //            }
+        //        }
+        //    }
+        //}
 
-        void CallService(int roomId, maintenanceType mt)
-        {
-            foreach(HotelRoom room in hotelRooms)
-            {
-                if(room.roomId == roomId)
-                {
-                    Maintenance m = new Maintenance(mt, roomId, maintenanceStatus.Todo, "Nothing to specify");
-                }
-            }
-        }
-        void CallService(int roomId, maintenanceType mt, string note)
-        {
-            foreach (HotelRoom room in hotelRooms)
-            {
-                if (room.roomId == roomId)
-                {
-                    Maintenance m = new Maintenance(mt, roomId, maintenanceStatus.Todo, note);
-                }
-            }
-        }
+        //void CallService(int roomId, maintenanceType mt)
+        //{
+        //    foreach(HotelRoom room in hotelRooms)
+        //    {
+        //        if(room.roomId == roomId)
+        //        {
+        //            Maintenance m = new Maintenance(mt, roomId, maintenanceStatus.Todo, "Nothing to specify");
+        //        }
+        //    }
+        //}
+        //void CallService(int roomId, maintenanceType mt, string note)
+        //{
+        //    foreach (HotelRoom room in hotelRooms)
+        //    {
+        //        if (room.roomId == roomId)
+        //        {
+        //            Maintenance m = new Maintenance(mt, roomId, maintenanceStatus.Todo, note);
+        //        }
+        //    }
+        //}
 
         private void Services_Click(object sender, RoutedEventArgs e)
         {
            
+
+
         }
 
         private void Reservation_Click(object sender, RoutedEventArgs e)
         {
+            DeleteReservations mynewPage = new DeleteReservations(); 
+            this.Content = mynewPage;
 
         }
     }
