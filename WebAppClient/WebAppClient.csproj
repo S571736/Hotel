@@ -218,17 +218,16 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
-<<<<<<< Updated upstream
+
     <Compile Include="CheckBooking.aspx.cs">
       <DependentUpon>CheckBooking.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CheckBooking.aspx.designer.cs">
       <DependentUpon>CheckBooking.aspx</DependentUpon>
-=======
+    </Compile>
     <Compile Include="bookings.cs">
       <DependentUpon>HotelDBModel.tt</DependentUpon>
->>>>>>> Stashed changes
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
