@@ -116,28 +116,19 @@ namespace WebAppClient.CreateBooking
         protected void Button1_Click(object sender, EventArgs e)
         {
 
-<<<<<<< Updated upstream
-
-            //List<HotelRoom> availableRooms = bs.AvailableRooms(bookings, rooms, DateFrom, DateTo, NBeds, Size);
-
-            //HotelRoom theRoom = bs.firstValidRoomFromList(availableRooms);
 
             HotelRoom theRoom = new HotelRoom(123, Size.Suite, 2);
-=======
-           //List<HotelRoom> availableRooms = bs.AvailableRooms(bookings, rooms, DateFrom, DateTo, NBeds, Size);
-
-           //HotelRoom theRoom = bs.firstValidRoomFromList(availableRooms);
->>>>>>> Stashed changes
 
 
             if (true)
             {
 
-<<<<<<< Updated upstream
+
                 MessageBox.Show("Hello " + UserName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
-=======
+
+
                 MessageBox.Show("This room is available, and suits your preferences: " + rooms[0].roomID + rooms[0].size + rooms[0].beds + "Do you want to book it?");
->>>>>>> Stashed changes
+
 
                 string name = "yes";
                 Button showButton = new Button();
