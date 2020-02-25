@@ -5,7 +5,6 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Windows;
-using System.Linq;
 using HotelLibrary;
 using System.Data.Entity;
 
@@ -21,7 +20,7 @@ namespace WebAppClient.CreateBooking
         //Get from DB
         List<rooms> rooms = AllRooms();
 
-        List<bookings> bookings = AllBookings();
+        List<bookings> booking = AllBookings();
 
         HttpContext context = HttpContext.Current;
 
@@ -147,7 +146,7 @@ namespace WebAppClient.CreateBooking
                 showButton.Text = "Yes!";
                 showButton.Visible = true;
                 showButton.Enabled = true;
-                showButton.Click += new EventHandler(this.Button2_Click);
+                showButton.Click += new EventHandler(this.Button2_Click(theRoom));
                 Controls.Add(showButton);
 
             }
@@ -156,10 +155,15 @@ namespace WebAppClient.CreateBooking
 
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
+        protected void Button2_Click(object sender, EventArgs e, HotelRoom r)
         {
 
             //create booking in db
+
+            bookings b = new bookings();
+
+            b.customerID = UserID;
+            b.roomID = 
 
             
             MessageBox.Show("You have booked this room.");
