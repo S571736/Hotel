@@ -9,7 +9,7 @@ namespace WebFormsIdentity
 {
     public partial class Login : System.Web.UI.Page
     {
-
+        HttpContext context = HttpContext.Current;
 
         public static List<customer> AllCustomers()
         {
@@ -56,7 +56,17 @@ namespace WebFormsIdentity
             string firstName = FirstName.Text;
             string lastName = LastName.Text;
 
-           foreach(customer c in AllCustomers())
+          
+            Session["firstname"] = firstName;
+            Session["lastname"] = lastName;
+
+          
+            Response.Write(Session["firstname"]);
+            Response.Write(Session["lastname"]);
+
+
+
+            foreach (customer c in AllCustomers())
             {
                 if (c.firstName.ToLower().Equals(firstName.ToLower()) && c.lastName.ToLower().Equals(lastName.ToLower())) {
 

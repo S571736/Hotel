@@ -7,31 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebAppClient
+namespace HotelLibrary
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class bookings
+    public partial class services
     {
-        public int customerID { get; set; }
-        public int roomID { get; set; }
-        public Nullable<System.DateTime> dateTo { get; set; }
-        public Nullable<System.DateTime> dateFrom { get; set; }
+        public int serviceID { get; set; }
+        public string serviceType { get; set; }
+        public Nullable<int> roomID { get; set; }
+        public string serviceStatus { get; set; }
         public string note { get; set; }
     
-        public virtual customer customer { get; set; }
         public virtual rooms rooms { get; set; }
-
-        public bookings(int id, int rid, DateTime from, DateTime to, string n)
-        {
-            this.customerID = id;
-            this.roomID = rid;
-            this.dateFrom = from;
-            this.dateTo = to;
-            this.note = n;
-
-
-        }
     }
 }

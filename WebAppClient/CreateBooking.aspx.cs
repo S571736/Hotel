@@ -96,11 +96,19 @@ namespace WebAppClient.CreateBooking
             }
         }
      
-        string UserName
+        string FirstName
         {
             get
             {
-                return (string)context.Session["name"];
+                return (string)context.Session["firstname"];
+            }
+        }
+
+        string LastName
+        {
+            get
+            {
+                return (string)context.Session["lastname"];
             }
         }
 
@@ -116,24 +124,26 @@ namespace WebAppClient.CreateBooking
 
         }
 
-        public string showRoom(HotelRoom room)
+        public string showRoom(rooms room)
         {
-            string info = "Number of beds:" + room.nBeds.ToString() + " Type of room: " + room.size;
+            string info = "Number of beds:" + room.beds.ToString() + " Type of room: " + room.size;
             return info;
         }
 
         protected void Button1_Click(object sender, EventArgs e)
         {
+            
+            List<rooms> roomList = bs.AvailableRooms(AllBookings(), AllRooms(), DateFrom, DateTo, NBeds, Size);
 
-
-            HotelRoom theRoom = new HotelRoom(123, Size.Suite, 2);
-
+          
+            rooms theRoom = bs.firstValidRoomFromList(AllRooms());
+            
 
             if (true)
             {
 
 
-                MessageBox.Show("Hello " + UserName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
+                MessageBox.Show("Hello " + FirstName +  " " + LastName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
 
 
                 //MessageBox.Show("This room is available, and suits your preferences: " + rooms[0].roomID + rooms[0].size + rooms[0].beds + "Do you want to book it?");
@@ -146,7 +156,7 @@ namespace WebAppClient.CreateBooking
                 showButton.Text = "Yes!";
                 showButton.Visible = true;
                 showButton.Enabled = true;
-                showButton.Click += new EventHandler(this.Button2_Click(theRoom));
+                showButton.Click += new EventHandler(this.Button2_Click);
                 Controls.Add(showButton);
 
             }
@@ -155,7 +165,7 @@ namespace WebAppClient.CreateBooking
 
         }
 
-        protected void Button2_Click(object sender, EventArgs e, HotelRoom r)
+        protected void Button2_Click(object sender, EventArgs e)
         {
 
             //create booking in db
@@ -163,7 +173,7 @@ namespace WebAppClient.CreateBooking
             bookings b = new bookings();
 
             b.customerID = UserID;
-            b.roomID = 
+            //b.roomID;
 
             
             MessageBox.Show("You have booked this room.");

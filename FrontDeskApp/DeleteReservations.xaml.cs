@@ -27,12 +27,12 @@ namespace FrontDeskApp
             InitializeComponent();
 
             bookingService bs = new bookingService();
-            ObservableCollection<HotelRoom> res = new ObservableCollection<HotelRoom>
+            ObservableCollection<rooms> res = new ObservableCollection<rooms>
                 {
-                    new HotelRoom(1, HotelLibrary.Size.Double, 3),
-                    new HotelRoom(2, HotelLibrary.Size.Single, 1),
-                    new HotelRoom(4, HotelLibrary.Size.Suite, 3),
-                    new HotelRoom(7, HotelLibrary.Size.Double, 2),
+                    new rooms(1, HotelLibrary.Size.Double, 3),
+                    new rooms(2, HotelLibrary.Size.Single, 1),
+                    new rooms(4, HotelLibrary.Size.Suite, 3),
+                    new rooms(7, HotelLibrary.Size.Double, 2),
 
                 };
             //bs.rooms = res;
@@ -42,7 +42,7 @@ namespace FrontDeskApp
                 o =>
                 {
                     //MessageBox.Show(((HotelRoom)o).roomId.ToString());
-                    res.Remove((HotelRoom)o);
+                    res.Remove((rooms)o);
                 });
         }
 

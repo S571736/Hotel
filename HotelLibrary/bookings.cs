@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WebAppClient
+namespace HotelLibrary
 {
     using System;
     using System.Collections.Generic;
@@ -33,5 +33,6 @@ namespace WebAppClient
 
 
         }
+
     }
 }
