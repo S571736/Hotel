@@ -2,6 +2,7 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
 using System.Linq;
+using System.Windows;
 
 namespace WebFormsIdentity
 {
@@ -23,15 +24,20 @@ namespace WebFormsIdentity
             //{
                 // StatusMessage.Text = string.Format("User {0} was created successfully!", user.UserName);
 
-                StatusMessage.Text = string.Format("User {0} was created!", UserName.Text);
 
                 // create session 
 
                 Session["id"] = 1234;
                 Session["name"] = UserName.Text;
 
-            Response.Write(Session["id"]);
+                Response.Write(Session["id"]);
                 Response.Write(Session["name"]);
+
+
+            StatusMessage.Text = string.Format("User {0} was created!", UserName.Text);
+
+
+            MessageBox.Show(StatusMessage.Text);
 
             //add to DB
 

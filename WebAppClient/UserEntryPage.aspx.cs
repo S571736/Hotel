@@ -13,7 +13,8 @@ namespace WebAppClient
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            int userID = (int)Session["id"];
+            
+
            
         
         }

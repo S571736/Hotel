@@ -22,6 +22,7 @@ namespace WebAppClient.CreateBooking
 
         List<Booking> bookings;
 
+        HttpContext context = HttpContext.Current;
 
 
         Size Size
@@ -30,8 +31,8 @@ namespace WebAppClient.CreateBooking
             {
                 return bs.convertToEnum<Size>(DropDownList2.SelectedValue);
                     
-            
             }
+            set {}
         }
 
 
@@ -66,16 +67,23 @@ namespace WebAppClient.CreateBooking
         }
 
 
+        //getting user ID from session
         int UserID
         {
             get
             {
-                return (int)Session["id"];
+                return (int)context.Session["id"];
                
             }
         }
-
-
+     
+        string UserName
+        {
+            get
+            {
+                return (string)context.Session["name"];
+            }
+        }
 
 
         protected void Page_Load(object sender, EventArgs e)
@@ -99,17 +107,19 @@ namespace WebAppClient.CreateBooking
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-    
 
-           List<HotelRoom> availableRooms = bs.AvailableRooms(bookings, rooms, DateFrom, DateTo, NBeds, Size);
 
-           HotelRoom theRoom = bs.firstValidRoomFromList(availableRooms);
+            //List<HotelRoom> availableRooms = bs.AvailableRooms(bookings, rooms, DateFrom, DateTo, NBeds, Size);
+
+            //HotelRoom theRoom = bs.firstValidRoomFromList(availableRooms);
+
+            HotelRoom theRoom = new HotelRoom(123, Size.Suite, 2);
 
 
             if (theRoom != null)
             {
 
-                MessageBox.Show("This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
+                MessageBox.Show("Hello " + UserName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
 
                 string name = "yes";
                 Button showButton = new Button();
@@ -131,6 +141,8 @@ namespace WebAppClient.CreateBooking
         {
 
             //create booking in db
+
+            
             MessageBox.Show("You have booked this room.");
 
 
