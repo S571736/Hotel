@@ -21,7 +21,7 @@ namespace WebAppClient.CreateBooking
         //Get from DB
         List<rooms> rooms = AllRooms();
 
-        List<Booking> bookings;
+        List<bookings> bookings = AllBookings();
 
         HttpContext context = HttpContext.Current;
 
@@ -42,6 +42,16 @@ namespace WebAppClient.CreateBooking
             {
                 var query = from r in db.rooms
                             select r;
+                return query.ToList();
+            }
+        }
+
+        public static List<bookings> AllBookings()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from b in db.bookings
+                            select b;
                 return query.ToList();
             }
         }
@@ -127,7 +137,7 @@ namespace WebAppClient.CreateBooking
                 MessageBox.Show("Hello " + UserName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
 
 
-                MessageBox.Show("This room is available, and suits your preferences: " + rooms[0].roomID + rooms[0].size + rooms[0].beds + "Do you want to book it?");
+                //MessageBox.Show("This room is available, and suits your preferences: " + rooms[0].roomID + rooms[0].size + rooms[0].beds + "Do you want to book it?");
 
 
                 string name = "yes";
