@@ -30,7 +30,10 @@ namespace WebAppClient
             this.dateFrom = from;
             this.dateTo = to;
             this.note = n;
+        }
 
+        public bookings()
+        {
 
         }
     }

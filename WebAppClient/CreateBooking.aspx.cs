@@ -137,28 +137,46 @@ namespace WebAppClient.CreateBooking
             var listOfRooms = AllRooms();
             var listOfBookings = AllBookings();
 
-            List<rooms> availableRooms = listOfRooms.Where((Func<rooms, bool>)(i => i.beds == NBeds && i.size.Equals(Size))).ToList();
+            //List<rooms> availableRooms = listOfRooms.Where((Func<rooms, bool>)(i => i.beds == NBeds && i.size.Equals(Size.ToString().ToLower()))).ToList();
 
-            availableRooms = availableRooms.ToList();
+            List<rooms> avroms = new List<rooms>();
+
+            foreach(rooms r in listOfRooms)
+            {
+                if (r.beds == NBeds && r.size.Equals(Size.ToString().ToLower())){
+                    avroms.Add(r);
+                }
+            }
+
+            //availableRooms = availableRooms.ToList();
 
             foreach (bookings b in listOfBookings)
             {
-                foreach (rooms r in availableRooms)
+                foreach (rooms r in avroms)
                 {
                     if (b.roomID == r.roomID)
                     {
-                        if (b.dateFrom <= DateTo && b.dateTo >= DateFrom)
+                        DateTime tmpTo = new DateTime();
+                        DateTime tmpFrom = new DateTime();
+                        string rand = b.dateTo.ToString();
+                        tmpTo = Convert.ToDateTime(b.dateTo);
+                        tmpFrom = Convert.ToDateTime(b.dateFrom);
+                        if (DateFrom >= tmpTo && DateTo <= tmpFrom)
                         {
-                            availableRooms.Remove(r);
+                            avroms.Remove(r);
                         }
                     }
                 }
             }
 
-            var firstAvailableRoom = availableRooms.First();
+            rooms theRoom = new rooms();
 
+            if (avroms.Count() != 0)
+            {
+               theRoom = avroms.First();
+            };
 
-            rooms theRoom = firstAvailableRoom;
+             // Last opp til DB
 
 
             if (true)
