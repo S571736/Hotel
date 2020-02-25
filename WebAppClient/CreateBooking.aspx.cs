@@ -10,7 +10,7 @@ using System.Data.Entity;
 
 namespace WebAppClient.CreateBooking
 {
-    
+
     public partial class CreateBooking : System.Web.UI.Page
     {
 
@@ -30,9 +30,9 @@ namespace WebAppClient.CreateBooking
             get
             {
                 return bs.convertToEnum<Size>(DropDownList2.SelectedValue);
-                    
+
             }
-            set {}
+            set { }
         }
 
         public static List<rooms> AllRooms()
@@ -63,17 +63,18 @@ namespace WebAppClient.CreateBooking
 
                 return DateFromCalendar.SelectedDate.Date;
             }
-          
+
         }
 
 
-            DateTime DateTo
+        DateTime DateTo
+        {
+
+            get
             {
-              
-                get {
-                    return DateToCalendar.SelectedDate.Date;
-                }
+                return DateToCalendar.SelectedDate.Date;
             }
+        }
 
         int NBeds
         {
@@ -92,10 +93,10 @@ namespace WebAppClient.CreateBooking
             get
             {
                 return (int)context.Session["id"];
-               
+
             }
         }
-     
+
         string FirstName
         {
             get
@@ -117,8 +118,8 @@ namespace WebAppClient.CreateBooking
         {
 
         }
-       
-         
+
+
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -132,18 +133,39 @@ namespace WebAppClient.CreateBooking
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-            
-            List<rooms> roomList = bs.AvailableRooms(AllBookings(), AllRooms(), DateFrom, DateTo, NBeds, Size);
 
-          
-            rooms theRoom = bs.firstValidRoomFromList(AllRooms());
-            
+            var listOfRooms = AllRooms();
+            var listOfBookings = AllBookings();
+
+            List<rooms> availableRooms = listOfRooms.Where((Func<rooms, bool>)(i => i.beds == NBeds && i.size.Equals(Size))).ToList();
+
+            availableRooms = availableRooms.ToList();
+
+            foreach (bookings b in listOfBookings)
+            {
+                foreach (rooms r in availableRooms)
+                {
+                    if (b.roomID == r.roomID)
+                    {
+                        if (b.dateFrom <= DateTo && b.dateTo >= DateFrom)
+                        {
+                            availableRooms.Remove(r);
+                        }
+                    }
+                }
+            }
+
+            var firstAvailableRoom = availableRooms.First();
+
+
+            rooms theRoom = firstAvailableRoom;
+
 
             if (true)
             {
 
 
-                MessageBox.Show("Hello " + FirstName +  " " + LastName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
+                MessageBox.Show("Hello " + FirstName + " " + LastName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
 
 
                 //MessageBox.Show("This room is available, and suits your preferences: " + rooms[0].roomID + rooms[0].size + rooms[0].beds + "Do you want to book it?");
@@ -160,7 +182,7 @@ namespace WebAppClient.CreateBooking
                 Controls.Add(showButton);
 
             }
-           // }
+            // }
 
 
         }
@@ -170,12 +192,6 @@ namespace WebAppClient.CreateBooking
 
             //create booking in db
 
-            bookings b = new bookings();
-
-            b.customerID = UserID;
-            //b.roomID;
-
-            
             MessageBox.Show("You have booked this room.");
 
 

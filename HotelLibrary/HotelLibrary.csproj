@@ -10,4 +10,22 @@
     <PackageReference Include="System.Linq" Version="4.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Update="customer.cs">
+      <DependentUpon>HotelDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Update="HotelDBModel.Context.cs">
+      <DependentUpon>HotelDBModel.Context.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="rooms.cs">
+      <DependentUpon>HotelDBModel.tt</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
 </Project>
