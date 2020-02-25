@@ -15,23 +15,19 @@
                 <asp:Literal runat="server" ID="StatusMessage" />
             </p>
             <div style="margin-bottom: 10px">
-                <asp:Label runat="server" AssociatedControlID="UserName">User name</asp:Label>
+                <asp:Label runat="server" AssociatedControlID="FirstName">First name</asp:Label>
                 <div>
-                    <asp:TextBox runat="server" ID="UserName" />
+                    <asp:TextBox runat="server" ID="FirstName" />
                 </div>
             </div>
             <div style="margin-bottom: 10px">
-                <asp:Label runat="server" AssociatedControlID="Password">Password</asp:Label>
+                <asp:Label runat="server" AssociatedControlID="LastName">Last name</asp:Label>
                 <div>
-                    <asp:TextBox runat="server" ID="Password" TextMode="Password" />
+                    <asp:TextBox runat="server" ID="LastName" />
                 </div>
             </div>
-            <div style="margin-bottom: 10px">
-                <asp:Label runat="server" AssociatedControlID="ConfirmPassword">Confirm password</asp:Label>
-                <div>
-                    <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" />
-                </div>
-            </div>
+
+
             <div>
                 <div>
                     <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" />

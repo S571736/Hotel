@@ -19,6 +19,13 @@ namespace WebAppClient
         {
             this.bookings = new HashSet<bookings>();
         }
+
+        public customer(int customerID, string firstName, string lastName)
+        {
+            this.customerID = customerID;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
     
         public int customerID { get; set; }
         public string firstName { get; set; }
