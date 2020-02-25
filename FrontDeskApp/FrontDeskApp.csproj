@@ -63,6 +63,8 @@
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
     </ApplicationDefinition>
+    <Compile Include="bookings.cs" />
+    <Compile Include="customer.cs" />
     <Compile Include="DeleteReservations.xaml.cs">
       <DependentUpon>DeleteReservations.xaml</DependentUpon>
     </Compile>
@@ -70,6 +72,8 @@
     <Compile Include="Reservations.xaml.cs">
       <DependentUpon>Reservations.xaml</DependentUpon>
     </Compile>
+    <Compile Include="rooms.cs" />
+    <Compile Include="services.cs" />
     <Page Include="DeleteReservations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

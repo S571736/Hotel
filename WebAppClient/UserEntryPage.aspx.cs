@@ -13,8 +13,12 @@ namespace WebAppClient
         protected void Page_Load(object sender, EventArgs e)
         {
 
+<<<<<<< Updated upstream
             
 
+=======
+            //int userID = (int)Session["id"];
+>>>>>>> Stashed changes
            
         
         }

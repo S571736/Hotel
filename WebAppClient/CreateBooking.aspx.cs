@@ -5,10 +5,13 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Windows;
+using System.Linq;
 using HotelLibrary;
+using System.Data.Entity;
 
 namespace WebAppClient.CreateBooking
 {
+    
     public partial class CreateBooking : System.Web.UI.Page
     {
 
@@ -16,9 +19,7 @@ namespace WebAppClient.CreateBooking
 
 
         //Get from DB
-
-        List<HotelRoom> rooms;
-
+        List<rooms> rooms = AllRooms();
 
         List<Booking> bookings;
 
@@ -35,6 +36,15 @@ namespace WebAppClient.CreateBooking
             set {}
         }
 
+        public static List<rooms> AllRooms()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from r in db.rooms
+                            select r;
+                return query.ToList();
+            }
+        }
 
         DateTime DateFrom
         {
@@ -89,8 +99,6 @@ namespace WebAppClient.CreateBooking
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
-
         }
        
          
@@ -108,18 +116,28 @@ namespace WebAppClient.CreateBooking
         protected void Button1_Click(object sender, EventArgs e)
         {
 
+<<<<<<< Updated upstream
 
             //List<HotelRoom> availableRooms = bs.AvailableRooms(bookings, rooms, DateFrom, DateTo, NBeds, Size);
 
             //HotelRoom theRoom = bs.firstValidRoomFromList(availableRooms);
 
             HotelRoom theRoom = new HotelRoom(123, Size.Suite, 2);
+=======
+           //List<HotelRoom> availableRooms = bs.AvailableRooms(bookings, rooms, DateFrom, DateTo, NBeds, Size);
+
+           //HotelRoom theRoom = bs.firstValidRoomFromList(availableRooms);
+>>>>>>> Stashed changes
 
 
-            if (theRoom != null)
+            if (true)
             {
 
+<<<<<<< Updated upstream
                 MessageBox.Show("Hello " + UserName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
+=======
+                MessageBox.Show("This room is available, and suits your preferences: " + rooms[0].roomID + rooms[0].size + rooms[0].beds + "Do you want to book it?");
+>>>>>>> Stashed changes
 
                 string name = "yes";
                 Button showButton = new Button();

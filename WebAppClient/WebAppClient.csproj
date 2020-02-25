@@ -75,6 +75,8 @@
     <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.1\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Drawing" />
@@ -151,7 +153,24 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <EntityDeploy Include="HotelDBModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>HotelDBModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="HotelDBModel.edmx.diagram">
+      <DependentUpon>HotelDBModel.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="HotelDBModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelDBModel.edmx</DependentUpon>
+      <LastGenOutput>HotelDBModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="HotelDBModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>HotelDBModel.edmx</DependentUpon>
+      <LastGenOutput>HotelDBModel.cs</LastGenOutput>
+    </Content>
     <Content Include="Login.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -199,12 +218,17 @@
       <DependentUpon>About.aspx</DependentUpon>
     </Compile>
     <Compile Include="App_Start\RouteConfig.cs" />
+<<<<<<< Updated upstream
     <Compile Include="CheckBooking.aspx.cs">
       <DependentUpon>CheckBooking.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="CheckBooking.aspx.designer.cs">
       <DependentUpon>CheckBooking.aspx</DependentUpon>
+=======
+    <Compile Include="bookings.cs">
+      <DependentUpon>HotelDBModel.tt</DependentUpon>
+>>>>>>> Stashed changes
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
@@ -220,6 +244,9 @@
     <Compile Include="CreateBooking.aspx.designer.cs">
       <DependentUpon>CreateBooking.aspx</DependentUpon>
     </Compile>
+    <Compile Include="customer.cs">
+      <DependentUpon>HotelDBModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -229,6 +256,21 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="HotelDBModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelDBModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HotelDBModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="HotelDBModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>HotelDBModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
@@ -244,6 +286,12 @@
     </Compile>
     <Compile Include="Register.aspx.designer.cs">
       <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="rooms.cs">
+      <DependentUpon>HotelDBModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="services.cs">
+      <DependentUpon>HotelDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
@@ -294,6 +342,9 @@
       <Project>{1A20A7CB-5158-4667-B1EA-C6B0D62DC6AD}</Project>
       <Name>HotelLibrary</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
