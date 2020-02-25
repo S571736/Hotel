@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CheckBooking.aspx.cs" Inherits="WebAppClient.CheckBooking" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CheckBooking.aspx.cs" Inherits="WebAppClient.WebAppClient" %>
 
 <!DOCTYPE html>
 
@@ -17,13 +17,6 @@
             <br />
             <br />
             <asp:Table ID="Table1" runat="server" Height="170px" Width="478px">
-
-                <Table.Columns>
-      <TableColumn />
-      <TableColumn />
-      <TableColumn />
-    </Table.Columns>
-
 
             </asp:Table>
             <br />

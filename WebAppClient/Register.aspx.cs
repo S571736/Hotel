@@ -10,22 +10,40 @@ namespace WebFormsIdentity
         protected void CreateUser_Click(object sender, EventArgs e)
         {
             // Default UserStore constructor uses the default connection string named: DefaultConnection
-            var userStore = new UserStore<IdentityUser>();
-            var manager = new UserManager<IdentityUser>(userStore);
+            //var userStore = new UserStore<IdentityUser>();
+            //var manager = new UserManager<IdentityUser>(userStore);
 
-            var user = new IdentityUser() { UserName = UserName.Text };
-            IdentityResult result = manager.Create(user, Password.Text);
+         
 
-            if (result.Succeeded)
-            {
-                StatusMessage.Text = string.Format("User {0} was created successfully!", user.UserName);
-                //DBshit
-                //redirect
-            }
-            else
-            {
-                StatusMessage.Text = result.Errors.FirstOrDefault();
-            }
+
+            //var user = new IdentityUser() { UserName = UserName.Text };
+            //IdentityResult result = manager.Create(user, Password.Text);
+
+            //if (result.Succeeded)
+            //{
+                // StatusMessage.Text = string.Format("User {0} was created successfully!", user.UserName);
+
+                StatusMessage.Text = string.Format("User {0} was created!", UserName.Text);
+
+                // create session 
+
+                Session["id"] = 1234;
+                Session["name"] = UserName.Text;
+
+            Response.Write(Session["id"]);
+                Response.Write(Session["name"]);
+
+            //add to DB
+
+
+            //redirect
+
+            Response.Redirect("UserEntryPage.aspx");
+            //}
+            //else
+            //{
+            //    StatusMessage.Text = result.Errors.FirstOrDefault();
+            //}
         }
     }
 }
