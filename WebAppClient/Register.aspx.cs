@@ -65,7 +65,7 @@ namespace WebFormsIdentity
 
 
 
-            var id = AllBookings().Count() +1;
+            var id = AllCustomers().Count() +1;
 
             customer cu = new customer(id, firstName, lastName);
 

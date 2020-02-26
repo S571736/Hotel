@@ -109,6 +109,9 @@ namespace HotelLibrary
         {
             bookings = new List<bookings>();//ServerKall();
             rooms = new List<rooms>(); //ServerKall();   //bare tull etter = , errorfiks
+
+
+            
         }
         public bookings newBooking(Size size, int nbeds, int customerId, DateTime to, DateTime from, Status status)
         {

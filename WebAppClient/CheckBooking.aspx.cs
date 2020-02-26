@@ -19,13 +19,10 @@ namespace WebAppClient
 
 		bookingService bs = new bookingService();
 
-        private TextBox textBox1;
-        private FlowDocument flowDoc;
-        private Block table1;
-
-        int nBookings;
 
         List<bookings> bookings = AllBookings();
+        List<bookings> myBookings = new List<bookings>();
+
         List<rooms> rooms = AllRooms();
 
         public static List<bookings> AllBookings()
@@ -48,16 +45,6 @@ namespace WebAppClient
             }
         }
 
-
-        public CheckBooking()
-        {
-            InitializeComponent();
-        }
-
-        private void InitializeComponent()
-        {
-            throw new NotImplementedException();
-        }
 
         protected void Page_Load(object sender, EventArgs e)
 		{
@@ -100,6 +87,11 @@ namespace WebAppClient
 
 
             ////Append the HTML string to Placeholder.
+            ///
+            
+           
+           
+
             placeholder.Controls.Add(new Literal { Text = html.ToString() });
 
 
@@ -107,15 +99,18 @@ namespace WebAppClient
         }
 
 
-        public DataTable getData(List<bookings> bookings)
+        public DataTable getData(List<bookings> allBookings)
         {
 
-            foreach (bookings b in bookings)
-            {
-                
-                bookings.Add(b);
-                
+            int sessionID = (int)(Session["id"]);
 
+            foreach (bookings b in allBookings)
+            {
+                if(b.customerID == sessionID)
+                {
+                    myBookings.Add(b);
+                }             
+                
             }
 
 
@@ -127,7 +122,7 @@ namespace WebAppClient
             dt.Columns.Add("Numbers of beds", typeof(int));
             dt.Columns.Add("Type", typeof(string));  //muligens dette må være string
 
-            foreach (bookings b in bookings)
+            foreach (bookings b in myBookings)
             {
                 foreach (rooms r in AllRooms())
                 {
@@ -140,11 +135,15 @@ namespace WebAppClient
             }
 
 
-
-
             return dt;
         }
 
+
+        protected void LogOut_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("Login.aspx");
+            Session.Abandon();
+        }
 
     }
 }

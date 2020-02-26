@@ -73,11 +73,14 @@
 
         <b />
 
-       
+      
 
-
-
-
+     
+          <div>
+                <div>
+                    <asp:Button runat="server" OnClick="LogOut_Click" Text="Log Out" />
+                </div>
+            </div>
     </form>
 
       

@@ -12,6 +12,8 @@ namespace WebFormsIdentity
     {
         HttpContext context = HttpContext.Current;
 
+        customer customer = new customer(); 
+
         public static List<customer> AllCustomers()
         {
             using (var db = new HotelDBEntities())
@@ -70,6 +72,9 @@ namespace WebFormsIdentity
             foreach (customer c in AllCustomers())
             {
                 if (c.firstName.ToLower().Equals(firstName.ToLower()) && c.lastName.ToLower().Equals(lastName.ToLower())) {
+
+                    Session["id"] = c.customerID;
+                    Response.Write(Session["id"]);
 
                     result = true;
                 

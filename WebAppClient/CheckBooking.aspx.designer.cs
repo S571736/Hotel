@@ -11,7 +11,7 @@ namespace WebAppClient
 {
 
 
-    public partial class WebAppClient
+    public partial class CheckBooking
     {
 
         /// <summary>

@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Windows;
 using HotelLibrary;
 using System.Data.Entity;
+using WebAppClient;
 
 namespace WebAppClient.CreateBooking
 {
@@ -17,10 +18,16 @@ namespace WebAppClient.CreateBooking
         bookingService bs = new bookingService();
 
 
+
+
         //Get from DB
         List<rooms> rooms = AllRooms();
 
         List<bookings> booking = AllBookings();
+
+        bookings myBooking = new bookings();
+
+        HotelDBEntities db = new HotelDBEntities();
 
         HttpContext context = HttpContext.Current;
 
@@ -125,11 +132,35 @@ namespace WebAppClient.CreateBooking
 
         }
 
+        public static List<customer> AllCustomers()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from c in db.customer
+                            select c;
+                return query.ToList();
+            }
+        }
+
         public string showRoom(rooms room)
         {
             string info = "Number of beds:" + room.beds.ToString() + " Type of room: " + room.size;
             return info;
         }
+
+        public customer getUser()
+        {
+            customer user = new customer();
+            foreach (customer c in AllCustomers())
+            {
+                if(c.customerID == UserID)
+                {
+                    user = c;
+                }
+            }
+            return user;
+        }
+
 
         protected void Button1_Click(object sender, EventArgs e)
         {
@@ -183,21 +214,42 @@ namespace WebAppClient.CreateBooking
             {
 
 
-                MessageBox.Show("Hello " + FirstName + " " + LastName + " This room is available, and suits your preferences: " + showRoom(theRoom) + "Do you want to book it?");
+
+                MessageBoxResult booked = MessageBox.Show("Hello " + FirstName + " " + LastName + " This room suits your preferences: " + showRoom(theRoom) + ". Do you want to book it? ", "Booked Room", MessageBoxButton.OKCancel);
 
 
-                //MessageBox.Show("This room is available, and suits your preferences: " + rooms[0].roomID + rooms[0].size + rooms[0].beds + "Do you want to book it?");
+                switch (booked)
+                {
+                    case MessageBoxResult.OK:
+
+                        myBooking = new bookings();
+
+                        myBooking.roomID = theRoom.roomID;
+                        myBooking.customerID = UserID;
+                        myBooking.dateFrom = DateFrom;
+                        myBooking.dateTo = DateTo;
+                        myBooking.note = "Booked";
 
 
-                string name = "yes";
-                Button showButton = new Button();
+                        //myBooking.customer = getUser();
+                        //myBooking.rooms = theRoom;
 
-                showButton.CommandName = name;
-                showButton.Text = "Yes!";
-                showButton.Visible = true;
-                showButton.Enabled = true;
-                showButton.Click += new EventHandler(this.Button2_Click);
-                Controls.Add(showButton);
+                        db.bookings.Add(myBooking);
+                        db.SaveChanges();
+
+                        Response.Redirect("CheckBooking.aspx");
+
+
+                        break;
+              
+                    case MessageBoxResult.Cancel:
+
+                        MessageBox.Show("Do you want to book another?", "Delete");
+                        Response.Redirect("CreateBooking.aspx");
+
+                        break;
+                }
+
 
             }
             // }
@@ -205,14 +257,12 @@ namespace WebAppClient.CreateBooking
 
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
+
+
+        protected void LogOut_Click(object sender, EventArgs e)
         {
-
-            //create booking in db
-
-            MessageBox.Show("You have booked this room.");
-
-
+            Response.Redirect("Login.aspx");
+            Session.Abandon();
         }
 
     }

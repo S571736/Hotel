@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CheckBooking.aspx.cs" Inherits="WebAppClient.WebAppClient" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="CheckBooking.aspx.cs" Inherits="WebAppClient.CheckBooking" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -26,9 +26,16 @@
     <form id="form1" runat="server">
         <div style="margin-left: auto; margin-right: auto; text-align: center;">
 
-            <asp:PlaceHolder ID="placeholder" runat="server" />
+            <asp:PlaceHolder ID="placeholder" runat="server"></asp:PlaceHolder>
 
         </div>
+
+          <div>
+                <div>
+                    <asp:Button runat="server" OnClick="LogOut_Click" Text="Log Out" />
+                </div>
+            </div>
     </form>
+
 </body>
 </html>

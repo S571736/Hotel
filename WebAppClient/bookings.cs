@@ -23,18 +23,20 @@ namespace WebAppClient
         public virtual customer customer { get; set; }
         public virtual rooms rooms { get; set; }
 
-        public bookings(int id, int rid, DateTime from, DateTime to, string n)
-        {
-            this.customerID = id;
-            this.roomID = rid;
-            this.dateFrom = from;
-            this.dateTo = to;
-            this.note = n;
-        }
+        //public bookings(customer cust, rooms room,  DateTime from, DateTime to, string n)
+        //{
+        //    this.customer = cust;
+        //    this.rooms = room;
+        //    this.dateFrom = from;
+        //    this.dateTo = to;
+        //    this.note = n;
 
-        public bookings()
-        {
+        //}
 
-        }
+        //public bookings()
+        //{
+
+        //}
+
     }
 }

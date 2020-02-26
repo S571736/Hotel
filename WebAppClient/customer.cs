@@ -11,7 +11,7 @@ namespace WebAppClient
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -26,11 +26,11 @@ namespace WebAppClient
             this.firstName = firstName;
             this.lastName = lastName;
         }
-    
+
         public int customerID { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bookings> bookings { get; set; }
     }
