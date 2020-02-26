@@ -164,7 +164,7 @@ namespace WebAppClient.CreateBooking
 
         protected void Button1_Click(object sender, EventArgs e)
         {
-
+            bool roomCheck = false;
             var listOfRooms = AllRooms();
             var listOfBookings = AllBookings();
 
@@ -189,9 +189,10 @@ namespace WebAppClient.CreateBooking
                     {
                         DateTime tmpTo = new DateTime();
                         DateTime tmpFrom = new DateTime();
-                        string rand = b.dateTo.ToString();
+                       
                         tmpTo = Convert.ToDateTime(b.dateTo);
                         tmpFrom = Convert.ToDateTime(b.dateFrom);
+                        
                         if (DateFrom >= tmpTo && DateTo <= tmpFrom)
                         {
                             avroms.Remove(r);
@@ -205,12 +206,27 @@ namespace WebAppClient.CreateBooking
             if (avroms.Count() != 0)
             {
                theRoom = avroms.First();
-            };
+                roomCheck = true;
+
+            }
+            else
+            {
+               MessageBoxResult failed = MessageBox.Show("No available rooms that match your preferences. Try again.", "Not available", MessageBoxButton.OK);
+
+                switch (failed)
+                {
+                    case MessageBoxResult.OK:
+                        Response.Redirect("CreateBooking.aspx");
+                    break;
+                }
+                
+
+            }
 
              // Last opp til DB
 
 
-            if (true)
+            if (roomCheck)
             {
 
 
