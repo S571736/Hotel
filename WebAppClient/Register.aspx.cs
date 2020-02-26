@@ -94,6 +94,13 @@ namespace WebFormsIdentity
 
 
         }
-    }
+
+        protected void Login_OnClick(object sender, EventArgs e)
+        {
+            Response.Redirect("Login.aspx");
+
+        }
+
+        }
 }
 

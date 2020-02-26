@@ -36,18 +36,13 @@
     <br />
 
 
-
         <br />
         Date from:
         <br />
-        
-      
-        
-        
+             
         <asp:Calendar ID="DateFromCalendar" runat="server" SelectedDate='<%# Bind("dateFrom") %>'>
 
-            <SelectedDayStyle BackColor="LightGray" Font-Bold="True"></SelectedDayStyle>
-            
+            <SelectedDayStyle BackColor="LightGray" Font-Bold="True"></SelectedDayStyle>         
 
 
         </asp:Calendar>
@@ -57,13 +52,9 @@
 
         Date to:
 
-
         <br />
 
-
         <asp:Calendar ID="DateToCalendar" runat="server" SelectedDate='<%# Bind("dateTo") %>'></asp:Calendar>
-
-
 
 
         <br />
@@ -73,9 +64,6 @@
 
         <b />
 
-      
-
-     
           <div>
                 <div>
                     <asp:Button runat="server" OnClick="LogOut_Click" Text="Log Out" />
