@@ -25,6 +25,30 @@ namespace WebAppClient
 
         int nBookings;
 
+        List<bookings> bookings = AllBookings();
+        List<rooms> rooms = AllRooms();
+
+        public static List<bookings> AllBookings()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from b in db.bookings
+                            select b;
+                return query.ToList();
+            }
+        }
+
+        public static List<rooms> AllRooms()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from r in db.rooms
+                            select r;
+                return query.ToList();
+            }
+        }
+
+
         public CheckBooking()
         {
             InitializeComponent();
@@ -38,20 +62,87 @@ namespace WebAppClient
         protected void Page_Load(object sender, EventArgs e)
 		{
 
-            //if() bruker har bookings så
+            DataTable dt = this.getData(bookings);
 
-            //creating a parent FlowDocument()
-            flowDoc = new FlowDocument();
-
-            //Creating a table
-            flowDoc.Blocks.Add(table1);
+            StringBuilder html = new StringBuilder();
+            html.Append("<table border = '1'>");
 
 
-            int numberOfColumns = nBookings;
-
-       
+            html.Append("<tr>");
 
 
+            foreach (DataColumn column in dt.Columns)
+            {
+                html.Append("<th>");
+                html.Append(column.ColumnName);
+                html.Append("</th>");
+            }
+            html.Append("</tr>");
+
+
+            //Building the Data rows.
+            foreach (DataRow row in dt.Rows)
+            {
+                html.Append("<tr>");
+                foreach (DataColumn column in dt.Columns)
+                {
+                    html.Append("<td>");
+                    html.Append(row[column.ColumnName]);
+                    html.Append("</td>");
+                }
+                html.Append("</tr>");
+            }
+            //Table end.
+            html.Append("</table>");
+            string strText = html.ToString();
+
+
+
+
+            ////Append the HTML string to Placeholder.
+            placeholder.Controls.Add(new Literal { Text = html.ToString() });
+
+
+
+        }
+
+
+        public DataTable getData(List<bookings> bookings)
+        {
+
+            foreach (bookings b in bookings)
+            {
+                
+                bookings.Add(b);
+                
+
+            }
+
+
+            DataTable dt = new DataTable();
+
+            dt.Columns.Add("Room ID", typeof(int));
+            dt.Columns.Add("Date From", typeof(DateTime));
+            dt.Columns.Add("Date To", typeof(DateTime));
+            dt.Columns.Add("Numbers of beds", typeof(int));
+            dt.Columns.Add("Type", typeof(string));  //muligens dette må være string
+
+            foreach (bookings b in bookings)
+            {
+                foreach (rooms r in AllRooms())
+                {
+                    if (b.roomID == r.roomID)
+                    {
+                        dt.Rows.Add(b.roomID, b.dateFrom, b.dateTo, r.beds, r.size);
+                    }
+                }
+
+            }
+
+
+
+
+            return dt;
         }
 
 
