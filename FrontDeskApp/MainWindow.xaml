@@ -13,6 +13,8 @@
             <RowDefinition Height="50"></RowDefinition>
             <RowDefinition Height="20"></RowDefinition>
             <RowDefinition Height="40"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
+            <RowDefinition Height="40"></RowDefinition>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock 
@@ -30,22 +32,39 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="200"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Name="Reservation"
-            Content="Reservations"
+            <Button 
+            Content="Delete reservations"
             Grid.Column="1"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Margin="20,0,20,0"
-            Click="Reservation_Click" 
+            Click="DeleteReservations_Click" 
             Background="LightGray">
             </Button>
-            <Button Name="Services"
+            <Button
             Content="Services"
             Grid.Column="2"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Margin="20,0,20,0"
             Click="Services_Click"
+            Background="LightGray">
+            </Button>
+        </Grid>
+        <Grid Grid.Row="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="200"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Button
+            Content="Make reservations"
+            Grid.Column="1"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Margin="20,0,20,0"
+            Click="MakeReservations_Click"
             Background="LightGray">
             </Button>
         </Grid>

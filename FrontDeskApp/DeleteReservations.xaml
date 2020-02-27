@@ -7,16 +7,16 @@
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
       Title="DeleteReservations">
-
     <Grid Margin="0,0,0,0">
-        <ListView Name="RoomReservationList" ItemsSource="{Binding}" Margin="0,39,0,0">
+        <ListView Name="RoomReservationList" ItemsSource="{Binding}" Margin="0,38,0,0">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
-                        <GridViewColumn Width="100" Header="ID" DisplayMemberBinding="{Binding Path=roomId}" />
-                        <GridViewColumn Width="100" Header="Size" DisplayMemberBinding="{Binding Path=size}" />
-                        <GridViewColumn Width="100" Header="Beds" DisplayMemberBinding="{Binding Path=nBeds}" />
-                        
+                        <GridViewColumn Width="80" Header="CustomerID" DisplayMemberBinding="{Binding Path=customerID}" />
+                        <GridViewColumn Width="60" Header="RoomID" DisplayMemberBinding="{Binding Path=roomID}" />
+                        <GridViewColumn Width="150" Header="From" DisplayMemberBinding="{Binding Path=dateFrom}" />
+                        <GridViewColumn Width="150" Header="To" DisplayMemberBinding="{Binding Path=dateTo}" />
+                        <GridViewColumn Width="80" Header="Note" DisplayMemberBinding="{Binding Path=note}" />
                         <GridViewColumn Width="100" Header="Delete" >
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
@@ -24,11 +24,9 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
         </ListView>
-        
     </Grid>
 </Page>

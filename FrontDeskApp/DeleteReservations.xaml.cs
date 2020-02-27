@@ -1,19 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using HotelLibrary;
+using System.Linq;
+using System.Windows;
 
 namespace FrontDeskApp
 {
@@ -27,27 +19,39 @@ namespace FrontDeskApp
             InitializeComponent();
 
             bookingService bs = new bookingService();
-            ObservableCollection<HotelRoom> res = new ObservableCollection<HotelRoom>
-                {
-                    new HotelRoom(1, HotelLibrary.Size.Double, 3),
-                    new HotelRoom(2, HotelLibrary.Size.Single, 1),
-                    new HotelRoom(4, HotelLibrary.Size.Suite, 3),
-                    new HotelRoom(7, HotelLibrary.Size.Double, 2),
+            ObservableCollection<bookings> bookingList = new ObservableCollection<bookings>(allBookings());
 
-                };
-            //bs.rooms = res;
-            RoomReservationList.ItemsSource = res;
+            RoomReservationList.ItemsSource = bookingList;
 
             DeleteReservation = new RelayCommand(
                 o =>
                 {
-                    //MessageBox.Show(((HotelRoom)o).roomId.ToString());
-                    res.Remove((HotelRoom)o);
+                    deleteBooking((bookings)o);
+                    bookingList.Remove((bookings)o);
                 });
         }
 
-        public ICommand DeleteReservation { get; }
+        private static List<bookings> allBookings()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from b in db.bookings
+                            select b;
+                return query.ToList();
+            }
+        }
 
+        private static void deleteBooking(bookings o)
+        {
+            using (var db = new HotelDBEntities())
+            {
+                db.Entry(o).State = System.Data.Entity.EntityState.Deleted;
+                MessageBox.Show(("Deleted booking reservation on : " + ((bookings)o).roomID.ToString()));
+                db.SaveChanges();
+            }
+        }
+
+        public ICommand DeleteReservation { get; }
     }
 
     public class RelayCommand : ICommand
