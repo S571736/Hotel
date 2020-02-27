@@ -105,8 +105,6 @@
     <Compile Include="Services.xaml.cs">
       <DependentUpon>Services.xaml</DependentUpon>
     </Compile>
-    <Compile Include="rooms.cs" />
-    <Compile Include="services.cs" />
     <Page Include="DeleteReservations.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
