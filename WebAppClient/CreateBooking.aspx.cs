@@ -6,9 +6,12 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Windows;
 using HotelLibrary;
+using System.Data.Entity;
+using WebAppClient;
 
 namespace WebAppClient.CreateBooking
 {
+
     public partial class CreateBooking : System.Web.UI.Page
     {
 
@@ -16,50 +19,17 @@ namespace WebAppClient.CreateBooking
 
 
 
-        List<HotelRoom> rooms;
 
+        //Get from DB
+        List<rooms> rooms = AllRooms();
 
-        List<Booking> bookings;
+        List<bookings> booking = AllBookings();
 
+        bookings myBooking = new bookings();
 
+        HotelDBEntities db = new HotelDBEntities();
 
-        //Booking b1 = new Booking(1, 1, DateTime.Now, DateTime.Now.AddDays(1), Status.CheckedIn, "hei");
-        //Booking b2 = new Booking(2, 2, DateTime.Now, DateTime.Now.AddDays(1), Status.CheckedIn, "hei");
-
-
-        //HotelRoom r1 = new HotelRoom(1, Size.Single, 1);
-        //HotelRoom r2 = new HotelRoom(2, Size.Single, 1);
-        //HotelRoom r3 = new HotelRoom(3, Size.Single, 1);
-
-        //HotelRoom r4 = new HotelRoom(4, Size.Double, 2);
-        //HotelRoom r5 = new HotelRoom(5, Size.Double, 2);
-        //HotelRoom r6 = new HotelRoom(6, Size.Double, 2);
-
-        //HotelRoom r7 = new HotelRoom(7, Size.Triple, 3);
-        //HotelRoom r8 = new HotelRoom(8, Size.Triple, 3);
-        //HotelRoom r9 = new HotelRoom(9, Size.Triple, 3);
-        //HotelRoom r10 = new HotelRoom(10, Size.Triple, 3);
-
-        //HotelRoom r11 = new HotelRoom(11, Size.Suite, 4);
-        //HotelRoom r12 = new HotelRoom(12, Size.Suite, 4);
-        //HotelRoom r13 = new HotelRoom(13, Size.Suite, 4);
-
- 
-            //rooms.Add(r1);
-            //rooms.Add(r2);
-            //rooms.Add(r3);
-            //rooms.Add(r4);
-            //rooms.Add(r5);
-            //rooms.Add(r6);
-            //rooms.Add(r7);
-            //rooms.Add(r8);
-            //rooms.Add(r9);
-            //rooms.Add(r10);
-            //rooms.Add(r11);
-            //rooms.Add(r12);
-            //rooms.Add(r13);
-
-        
+        HttpContext context = HttpContext.Current;
 
 
         Size Size
@@ -67,11 +37,30 @@ namespace WebAppClient.CreateBooking
             get
             {
                 return bs.convertToEnum<Size>(DropDownList2.SelectedValue);
-                    
-            
+
+            }
+            set { }
+        }
+
+        public static List<rooms> AllRooms()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from r in db.rooms
+                            select r;
+                return query.ToList();
             }
         }
 
+        public static List<bookings> AllBookings()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from b in db.bookings
+                            select b;
+                return query.ToList();
+            }
+        }
 
         DateTime DateFrom
         {
@@ -81,17 +70,18 @@ namespace WebAppClient.CreateBooking
 
                 return DateFromCalendar.SelectedDate.Date;
             }
-          
+
         }
 
 
-            DateTime DateTo
+        DateTime DateTo
+        {
+
+            get
             {
-              
-                get {
-                    return DateToCalendar.SelectedDate.Date;
-                }
+                return DateToCalendar.SelectedDate.Date;
             }
+        }
 
         int NBeds
         {
@@ -104,92 +94,207 @@ namespace WebAppClient.CreateBooking
         }
 
 
+        //getting user ID from session
+        int UserID
+        {
+            get
+            {
+                return (int)context.Session["id"];
+
+            }
+        }
+
+        string FirstName
+        {
+            get
+            {
+                return (string)context.Session["firstname"];
+            }
+        }
+
+        string LastName
+        {
+            get
+            {
+                return (string)context.Session["lastname"];
+            }
+        }
 
 
         protected void Page_Load(object sender, EventArgs e)
         {
 
-
-
-           
-            //DropDownList DropList = new DropDownList();
-
-            //DropList.ID = "nbeds";
-            //DropList.AutoPostBack = true;
-
-            //DropList.DataBind();
-
-
-            //set date
-            //bruker velger date, beds size 
-
-            //skriver ut et rom som er ledig
-            //button 
-            //book this room - db
-
-            //--- Show results in page.
-        
-
-
-
         }
-       
-         
+
+
         protected void DropDownList1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
 
-        public string showRoom(HotelRoom room)
+        public static List<customer> AllCustomers()
         {
-            string info = "Number of beds:" + room.nBeds.ToString() + " Type of room: " + room.size;
+            using (var db = new HotelDBEntities())
+            {
+                var query = from c in db.customer
+                            select c;
+                return query.ToList();
+            }
+        }
+
+        public string showRoom(rooms room)
+        {
+            string info = "Number of beds:" + room.beds.ToString() + " Type of room: " + room.size;
             return info;
         }
 
+        public customer getUser()
+        {
+            customer user = new customer();
+            foreach (customer c in AllCustomers())
+            {
+                if (c.customerID == UserID)
+                {
+                    user = c;
+                }
+            }
+            return user;
+        }
+
+
         protected void Button1_Click(object sender, EventArgs e)
         {
-    
+            bool roomCheck = false;
+            var listOfRooms = AllRooms();
+            var listOfBookings = AllBookings();
 
-           List<HotelRoom> availableRooms = bs.AvailableRooms(bookings, rooms, DateFrom, DateTo, NBeds, Size);
+            if (DateFrom > DateTo)
+            {
+                MessageBoxResult result = MessageBox.Show("You need to choose a valid date.", "Error.", MessageBoxButton.OK);
+                switch (result)
+                {
+                    case MessageBoxResult.OK:
+                        Response.Redirect("CreateBooking.aspx");
+                        break;
+                }
 
-           HotelRoom theRoom = bs.firstValidRoomFromList(availableRooms);
-
-            MessageBox.Show("This room is available, and suits your preferences: " + showRoom(theRoom));
-
-            //Book.Enabled = true;
-            //Book.Visible = true;
-
-           // if(bs.firstValidRoomFromList(availableRooms) != null)
-            //{
-
-                //Create button - Yes it is available, do you want to book?
-                //onmouseclick - makeReservation.
-
-              //  MessageBox.Show("Do you want to book a room from: "+  DateFrom.Date.ToString() + " to " +  DateTo.Date.ToString() + " with "  + NBeds +  " beds and type: " +Size.ToString());
-
-
-                string name = "yes";
-                Button showButton = new Button();
-
-                showButton.CommandName = name;
-                showButton.Text = "Yes!";
-                showButton.Visible = true;
-                showButton.Enabled = true;
-                showButton.Click += new EventHandler(this.Button2_Click);
-                Controls.Add(showButton);
+            }
+            else
+            {
 
 
-           // }
+                List<rooms> avroms = new List<rooms>();
+
+                foreach (rooms r in listOfRooms)
+                {
+                    if (r.beds == NBeds && r.size.Equals(Size.ToString().ToLower()))
+                    {
+                        avroms.Add(r);
+                    }
+                }
+
+
+
+                foreach (bookings b in listOfBookings)
+                {
+                    foreach (rooms r in avroms)
+                    {
+                        if (b.roomID == r.roomID)
+                        {
+                            DateTime tmpTo = new DateTime();
+                            DateTime tmpFrom = new DateTime();
+
+                            tmpTo = Convert.ToDateTime(b.dateTo);
+                            tmpFrom = Convert.ToDateTime(b.dateFrom);
+
+                            if (DateFrom >= tmpTo && DateTo <= tmpFrom)
+                            {
+                                avroms.Remove(r);
+                            }
+                        }
+                    }
+                }
+
+                rooms theRoom = new rooms();
+
+                if (avroms.Count() != 0)
+                {
+                    theRoom = avroms.First();
+                    roomCheck = true;
+
+                }
+                else
+                {
+                    MessageBoxResult failed = MessageBox.Show("No available rooms that match your preferences. Try again.", "Not available", MessageBoxButton.OK);
+
+                    switch (failed)
+                    {
+                        case MessageBoxResult.OK:
+                            Response.Redirect("CreateBooking.aspx");
+                            break;
+                    }
+
+
+                }
+
+                // Last opp til DB
+
+
+                if (roomCheck)
+                {
+
+
+
+                    MessageBoxResult booked = MessageBox.Show("Hello " + FirstName + " " + LastName + " This room suits your preferences: " + showRoom(theRoom) + ". Do you want to book it? ", "Booked Room", MessageBoxButton.OKCancel);
+
+
+                    switch (booked)
+                    {
+                        case MessageBoxResult.OK:
+
+                            myBooking = new bookings();
+
+                            myBooking.roomID = theRoom.roomID;
+                            myBooking.customerID = UserID;
+                            myBooking.dateFrom = DateFrom;
+                            myBooking.dateTo = DateTo;
+                            myBooking.note = "Booked";
+
+
+                            //myBooking.customer = getUser();
+                            //myBooking.rooms = theRoom;
+
+                            db.bookings.Add(myBooking);
+                            db.SaveChanges();
+
+                            Response.Redirect("CheckBooking.aspx");
+
+
+                            break;
+
+                        case MessageBoxResult.Cancel:
+
+                            MessageBox.Show("Do you want to book another?", "Delete");
+                            Response.Redirect("CreateBooking.aspx");
+
+                            break;
+                    }
+
+
+                }
+
+            }
+            // }
 
 
         }
 
-        protected void Button2_Click(object sender, EventArgs e)
+
+
+        protected void LogOut_Click(object sender, EventArgs e)
         {
-
-            MessageBox.Show("Say what");
-
-
+            Response.Redirect("Login.aspx");
+            Session.Abandon();
         }
 
     }

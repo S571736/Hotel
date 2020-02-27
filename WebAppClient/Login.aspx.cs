@@ -1,37 +1,102 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Web;
+using WebAppClient;
 
 namespace WebFormsIdentity
 {
     public partial class Login : System.Web.UI.Page
     {
+        HttpContext context = HttpContext.Current;
+
+        customer customer = new customer(); 
+
+        public static List<customer> AllCustomers()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from c in db.customer
+                            select c;
+                return query.ToList();
+            }
+        }
+
+
+
+        public static List<rooms> AllRooms()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from r in db.rooms
+                            select r;
+                return query.ToList();
+            }
+        }
+
+        public static List<bookings> AllBookings()
+        {
+            using (var db = new HotelDBEntities())
+            {
+                var query = from b in db.bookings
+                            select b;
+                return query.ToList();
+            }
+        }
+
+
+
         protected void LoginUser_Click(object sender, EventArgs e)
         {
-            // Default UserStore constructor uses the default connection string named: DefaultConnection
-            var userStore = new UserStore<IdentityUser>();
-            var manager = new UserManager<IdentityUser>(userStore);
 
-            var user = new IdentityUser() { UserName = UserName.Text };
-            IdentityResult result = manager.Create(user, Password.Text);
 
-            if (result.Succeeded)
+            var db = new HotelDBEntities();
+
+            bool result = false;
+
+            string firstName = FirstName.Text;
+            string lastName = LastName.Text;
+
+          
+            Session["firstname"] = firstName;
+            Session["lastname"] = lastName;
+
+          
+            Response.Write(Session["firstname"]);
+            Response.Write(Session["lastname"]);
+
+
+
+            foreach (customer c in AllCustomers())
             {
-                //DBshit db.get(user)
-                // if pw ==DB.PW && DB.getUser != null
-                //login, add something to session
+                if (c.firstName.ToLower().Equals(firstName.ToLower()) && c.lastName.ToLower().Equals(lastName.ToLower())) {
+
+                    Session["id"] = c.customerID;
+                    Response.Write(Session["id"]);
+
+                    result = true;
+                
+                }
+            }
+
+
+
+
+            if (result)
+            {
+  
+
                 Response.Redirect("UserEntryPage.aspx");
-                //else if  DB.getUser != null (user does not exist)
-                //reload page
-
-
-
+               
 
             }
             else
             {
-                StatusMessage.Text = result.Errors.FirstOrDefault();
+                StatusMessage.Text = "ERROR!!!     Er du sikker på at du skrev riktig navn?";
+                
+                
             }
         }
 

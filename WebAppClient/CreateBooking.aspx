@@ -3,7 +3,7 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head runat="server">
-    <title></title>
+    <title>Reservation, just make it!</title>
     <style type="text/css">
         #form1 {
             height: 850px;
@@ -15,10 +15,9 @@
         <div>
         </div>
         <p>
-            <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+            <asp:Label ID="Label1" runat="server" Text="Make a Reservation" Font-Size="Large"></asp:Label>
         </p>
-        Find Room <br />
-    <br />
+  
     <br />
     Number of beds:<br />
     <asp:DropDownList ID="DropDownList1" runat="server" >
@@ -36,18 +35,13 @@
     <br />
 
 
-
         <br />
         Date from:
         <br />
-        
-      
-        
-        
+             
         <asp:Calendar ID="DateFromCalendar" runat="server" SelectedDate='<%# Bind("dateFrom") %>'>
 
-            <SelectedDayStyle BackColor="LightGray" Font-Bold="True"></SelectedDayStyle>
-            
+            <SelectedDayStyle BackColor="LightGray" Font-Bold="True"></SelectedDayStyle>         
 
 
         </asp:Calendar>
@@ -57,27 +51,24 @@
 
         Date to:
 
-
         <br />
-
 
         <asp:Calendar ID="DateToCalendar" runat="server" SelectedDate='<%# Bind("dateTo") %>'></asp:Calendar>
 
 
-
-
+     
         <br />
-        <br />
-        <asp:Button ID="ButtonSend" runat="server" OnClick="Button1_Click" Text="Check Availability" />
+        <asp:Button ID="ButtonSend" runat="server" OnClick="Button1_Click" Text="Check Availability" Width="314px" />
 
 
         <b />
+        <br />
 
-       
-
-
-
-
+          <div>
+                <div>
+                    <asp:Button runat="server" OnClick="LogOut_Click" Text="Log Out" Width="314px" />
+                </div>
+            </div>
     </form>
 
       

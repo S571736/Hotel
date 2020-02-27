@@ -7,14 +7,10 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrontDeskApp
+namespace WebAppClient
 {
     using System;
     using System.Collections.Generic;
-    
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
 
     public partial class customer
     {
@@ -23,11 +19,18 @@ namespace FrontDeskApp
         {
             this.bookings = new HashSet<bookings>();
         }
-    
+
+        public customer(int customerID, string firstName, string lastName)
+        {
+            this.customerID = customerID;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
         public int customerID { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }
-    
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bookings> bookings { get; set; }
     }

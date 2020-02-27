@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data;
+using System.Data.SqlClient;
+
 
 namespace HotelLibrary
 {
+
     public enum Size
     {
         Single,
@@ -31,88 +35,91 @@ namespace HotelLibrary
         CheckedOut
     }
 
-    public class HotelRoom
-    {
-        public int nBeds { get; set; }
-        public Size size { get; set; }
-        public int roomId { get; set; }
-        public HotelRoom(int roomId, Size size, int nBeds)
-        {
-            this.roomId = roomId;
-            this.size = size;
-            this.nBeds = nBeds;
+    //public class Rooms
+    //{
+    //    public int nBeds { get; set; }
+    //    public Size s { get; set; }
+    //    public int roomId { get; set; }
+    //    public Rooms(int roomId, Size s, int nBeds)
+    //    {
+    //        this.roomId = roomId;
+    //        this.s = s;
+    //        this.nBeds = nBeds;
 
-        }
-    }
+    //    }
+    //}
 
 
 
-    public class Booking
-    {
-        public int customerId { get; set; }
-        public int roomId { get; set; }
-        public DateTime to { get; set; }
-        public DateTime from { get; set; }
-        public Status status { get; set; }
-        public string note { get; set; }
-        public Booking(int customerId, int roomId, DateTime to, DateTime from, Status status, string note)
-        {
-            this.customerId = customerId;
-            this.roomId = roomId;
-            this.to = to;
-            this.from = from;
-            this.status = status;
-            this.note = note;
-        }
-    }
+    //public class Booking
+    //{
+    //    public int customerId { get; set; }
+    //    public int roomId { get; set; }
+    //    public DateTime to { get; set; }
+    //    public DateTime from { get; set; }
+    //    public Status status { get; set; }
+    //    public string note { get; set; }
+    //    public Booking(int customerId, int roomId, DateTime to, DateTime from, Status status, string note)
+    //    {
+    //        this.customerId = customerId;
+    //        this.roomId = roomId;
+    //        this.to = to;
+    //        this.from = from;
+    //        this.status = status;
+    //        this.note = note;
+    //    }
+    //}
 
-    public class Maintenance
-    {
-        public maintenanceType mt { get;  set; }
-        public int roomId { get;  set; }
-        public string note { get;  set; }
-        public maintenanceStatus ms { get;  set; }
+    //public class Services
+    //{
+    //    public maintenanceType mt { get; set; }
+    //    public int roomId { get; set; }
+    //    public string note { get; set; }
+    //    public maintenanceStatus ms { get; set; }
 
-        public Maintenance(maintenanceType mt, int roomId, maintenanceStatus ms, string note)
-        {
-            this.mt = mt;
-            this.roomId = roomId;
-            this.ms = ms;
-            this.note = note;
-        }
-    }
+    //    public Services(maintenanceType mt, int roomId, maintenanceStatus ms, string note)
+    //    {
+    //        this.mt = mt;
+    //        this.roomId = roomId;
+    //        this.ms = ms;
+    //        this.note = note;
+    //    }
+    //}
 
-    public class User
-    {
-        public int userId { get;  set; }
-        public string firstName { get;  set; }
-        public string surName { get;  set; }
-        public User(int userId, string firstName, string surName)
-        {
-            this.userId = userId;
-            this.firstName = firstName;
-            this.surName = surName;
-        }
-    }
+    //public class User
+    //{
+    //    public int userId { get; set; }
+    //    public string firstName { get; set; }
+    //    public string surName { get; set; }
+    //    public User(int userId, string firstName, string surName)
+    //    {
+    //        this.userId = userId;
+    //        this.firstName = firstName;
+    //        this.surName = surName;
+    //    }
+    //}
 
     public class bookingService
     {
         //TODO Get DB call
-        public List<Booking> bookings { get; set; }
-        public List<HotelRoom> rooms { get; set; }
+        public List<bookings> bookings { get; set; }
+        public List<rooms> rooms { get; set; }
 
         public bookingService()
         {
-            bookings = new List<Booking> () ;//ServerKall();
-            rooms = new List<HotelRoom>(); //ServerKall();   //bare tull etter = , errorfiks
+            bookings = new List<bookings>();//ServerKall();
+            rooms = new List<rooms>(); //ServerKall();   //bare tull etter = , errorfiks
+
+
+            
         }
-        public Booking newBooking(Size size, int nbeds, int customerId, DateTime to, DateTime from, Status status)
+        public bookings newBooking(Size size, int nbeds, int customerId, DateTime to, DateTime from, Status status)
         {
-            int roomId = firstValidRoomFromList(AvailableRooms(bookings, rooms, from, to, nbeds, size)).roomId;
+            int roomId = firstValidRoomFromList(AvailableRooms(bookings, rooms, from, to, nbeds, size)).roomID;
 
 
             string s = "Customer Id: " + customerId.ToString() + " has booked this room";
-            Booking b = new Booking(customerId, roomId, to, from, status, s);
+            bookings b = new bookings(customerId, roomId, from, to, s);
 
             return b;
         }
@@ -124,15 +131,15 @@ namespace HotelLibrary
         }
 
 
-        public bool DateCheck(List<Booking> bookings, DateTime dateFrom, DateTime dateTo, HotelRoom room)
+        public bool DateCheck(List<bookings> bookings, DateTime dateFrom, DateTime dateTo, rooms room)
         {
 
             for (DateTime date = dateFrom; date <= dateTo; date = date.AddDays(1))
             {
 
-                foreach (Booking b in bookings)
+                foreach (bookings b in bookings)
                 {
-                    if (!(date >= b.from && date <= b.to))
+                    if (!(date >= b.dateFrom && date <= b.dateTo))
                     {
                         return true;
                     }
@@ -143,21 +150,23 @@ namespace HotelLibrary
 
         }
 
-        public List<HotelRoom> AvailableRooms(List<Booking> bookings, List<HotelRoom> rooms, DateTime dateFrom, DateTime dateTo, int nBeds, Size size)
+        public List<rooms> AvailableRooms(List<bookings> bookings, List<rooms> r, DateTime dateFrom, DateTime dateTo, int nBeds, Size s)
         {
 
+            string si = s.ToString();
 
-            var validRooms = rooms.Where(i => i.nBeds == nBeds && i.size.Equals(size));
 
-            List<HotelRoom> validR = validRooms.ToList();
+           var validRooms = rooms.Where((Func<rooms, bool>)(i => i.beds == nBeds && i.size.Equals(si)));
+
+            List<rooms> validR = validRooms.ToList();
 
             //loop through rooms and filter with date
-            foreach (HotelRoom r in validR)
+            foreach (rooms ro in validR)
             {
-                if (!DateCheck(bookings, dateFrom, dateTo, r))
+                if (!DateCheck(bookings, dateFrom, dateTo, ro))
 
                 {
-                    validR.Remove(r);
+                    validR.Remove(ro);
                 }
 
             }
@@ -167,13 +176,43 @@ namespace HotelLibrary
 
 
 
-        public HotelRoom firstValidRoomFromList(List<HotelRoom> availableRooms)
+        public rooms firstValidRoomFromList(List<rooms> availableRooms)
         {
             return availableRooms.First();
         }
 
 
 
+    }
+
+    public class DBService
+
+    {
+        static string connstring = "Server=tcp:hotel-server-dat154.database.windows.net,1433;Initial Catalog = HotelDB; Persist Security Info=False;User ID = admin1; Password={your_password }; MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout = 30;";
+
+        public DBService()
+        {
+
+        }
+
+        List<rooms> DBgetrooms()
+        {
+            List<rooms> rooms = new List<rooms>();
+
+            /*
+            TODO: Add a connection to the database
+            using (SqlConnection conn = new SqlConnection(connstring))
+            {
+                SqlDataReader rdr = null;
+
+                
+                
+            }
+            */
+
+
+            return rooms;
+        }
     }
 
 }

@@ -7,28 +7,27 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrontDeskApp
+namespace WebAppClient
 {
     using System;
     using System.Collections.Generic;
     
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
-    public partial class customer
+    public partial class rooms
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public customer()
+        public rooms()
         {
             this.bookings = new HashSet<bookings>();
+            this.services = new HashSet<services>();
         }
     
-        public int customerID { get; set; }
-        public string firstName { get; set; }
-        public string lastName { get; set; }
+        public int roomID { get; set; }
+        public string size { get; set; }
+        public Nullable<int> beds { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<bookings> bookings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<services> services { get; set; }
     }
 }

@@ -7,15 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrontDeskApp
+namespace HotelLibrary
 {
     using System;
     using System.Collections.Generic;
     
-    using System.ComponentModel.DataAnnotations;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Data.Entity.Spatial;
-
     public partial class customer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,7 +19,14 @@ namespace FrontDeskApp
         {
             this.bookings = new HashSet<bookings>();
         }
-    
+
+        public customer(int customerID, string firstName, string lastName)
+        {
+            this.customerID = customerID;
+            this.firstName = firstName;
+            this.lastName = lastName;
+        }
+
         public int customerID { get; set; }
         public string firstName { get; set; }
         public string lastName { get; set; }

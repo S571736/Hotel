@@ -9,32 +9,34 @@
 <body style="font-family: Arial, Helvetica, sans-serif; font-size: small">
     <form id="form1" runat="server">
         <div>
-            <h4 style="font-size: medium">Register a new user</h4>
+            <h4 style="font-size: medium" a>Register a new user</h4>
             <hr />
             <p>
                 <asp:Literal runat="server" ID="StatusMessage" />
             </p>
             <div style="margin-bottom: 10px">
-                <asp:Label runat="server" AssociatedControlID="UserName">User name</asp:Label>
+                <asp:Label runat="server" AssociatedControlID="FirstName">First name</asp:Label>
                 <div>
-                    <asp:TextBox runat="server" ID="UserName" />
+                    <asp:TextBox runat="server" ID="FirstName" Width="189px" />
                 </div>
             </div>
             <div style="margin-bottom: 10px">
-                <asp:Label runat="server" AssociatedControlID="Password">Password</asp:Label>
+                <asp:Label runat="server" AssociatedControlID="LastName">Last name</asp:Label>
                 <div>
-                    <asp:TextBox runat="server" ID="Password" TextMode="Password" />
+                    <asp:TextBox runat="server" ID="LastName" Width="188px" />
                 </div>
             </div>
-            <div style="margin-bottom: 10px">
-                <asp:Label runat="server" AssociatedControlID="ConfirmPassword">Confirm password</asp:Label>
-                <div>
-                    <asp:TextBox runat="server" ID="ConfirmPassword" TextMode="Password" />
-                </div>
-            </div>
+
+
             <div>
                 <div>
-                    <asp:Button runat="server" OnClick="CreateUser_Click" Text="Register" />
+                    <asp:Button runat="server" OnClick="CreateUser_Click" Width="200" TextAlignment="center" Text="Register" />
+                </div>
+            </div>
+
+             <div>
+                <div>
+                    <asp:Button runat="server" OnClick="Login_OnClick" Width="200" TextAlignment="center" Text="Already have a user" />
                 </div>
             </div>
         </div>

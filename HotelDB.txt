@@ -1,0 +1,34 @@
+create table rooms(
+    roomID int,
+    size varchar(6),
+    beds int,
+    primary key (roomID)
+);
+
+create table bookings(
+    customerID int,
+    roomID int,
+    dateTo DATE,
+    dateFrom date,
+    note varchar(255),
+    primary key(customerID, roomID),
+    foreign key(roomID) references rooms(roomID),
+    foreign key(customerID) references customer(customerID)
+);
+
+create table customer(
+    customerID int,
+    firstName varchar(25),
+    lastName varchar(25),
+    primary key(customerID)
+);
+
+create table services(
+    serviceID int,
+    serviceType varchar(15),
+    roomID int,
+    serviceStatus varchar(15),
+    note varchar(255),
+    primary key(serviceID),
+    foreign key(roomID) references rooms(roomID)
+);
