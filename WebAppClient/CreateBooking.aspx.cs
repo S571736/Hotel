@@ -153,7 +153,7 @@ namespace WebAppClient.CreateBooking
             customer user = new customer();
             foreach (customer c in AllCustomers())
             {
-                if(c.customerID == UserID)
+                if (c.customerID == UserID)
                 {
                     user = c;
                 }
@@ -168,104 +168,120 @@ namespace WebAppClient.CreateBooking
             var listOfRooms = AllRooms();
             var listOfBookings = AllBookings();
 
-            //List<rooms> availableRooms = listOfRooms.Where((Func<rooms, bool>)(i => i.beds == NBeds && i.size.Equals(Size.ToString().ToLower()))).ToList();
-
-            List<rooms> avroms = new List<rooms>();
-
-            foreach(rooms r in listOfRooms)
+            if (DateFrom > DateTo)
             {
-                if (r.beds == NBeds && r.size.Equals(Size.ToString().ToLower())){
-                    avroms.Add(r);
-                }
-            }
-
-            //availableRooms = availableRooms.ToList();
-
-            foreach (bookings b in listOfBookings)
-            {
-                foreach (rooms r in avroms)
+                MessageBoxResult result = MessageBox.Show("You need to choose a valid date.", "Error.", MessageBoxButton.OK);
+                switch (result)
                 {
-                    if (b.roomID == r.roomID)
-                    {
-                        DateTime tmpTo = new DateTime();
-                        DateTime tmpFrom = new DateTime();
-                       
-                        tmpTo = Convert.ToDateTime(b.dateTo);
-                        tmpFrom = Convert.ToDateTime(b.dateFrom);
-                        
-                        if (DateFrom >= tmpTo && DateTo <= tmpFrom)
-                        {
-                            avroms.Remove(r);
-                        }
-                    }
+                    case MessageBoxResult.OK:
+                        Response.Redirect("CreateBooking.aspx");
+                        break;
                 }
-            }
-
-            rooms theRoom = new rooms();
-
-            if (avroms.Count() != 0)
-            {
-               theRoom = avroms.First();
-                roomCheck = true;
 
             }
             else
             {
-               MessageBoxResult failed = MessageBox.Show("No available rooms that match your preferences. Try again.", "Not available", MessageBoxButton.OK);
 
-                switch (failed)
+
+                List<rooms> avroms = new List<rooms>();
+
+                foreach (rooms r in listOfRooms)
                 {
-                    case MessageBoxResult.OK:
-                        Response.Redirect("CreateBooking.aspx");
-                    break;
-                }
-                
-
-            }
-
-             // Last opp til DB
-
-
-            if (roomCheck)
-            {
-
-
-
-                MessageBoxResult booked = MessageBox.Show("Hello " + FirstName + " " + LastName + " This room suits your preferences: " + showRoom(theRoom) + ". Do you want to book it? ", "Booked Room", MessageBoxButton.OKCancel);
-
-
-                switch (booked)
-                {
-                    case MessageBoxResult.OK:
-
-                        myBooking = new bookings();
-
-                        myBooking.roomID = theRoom.roomID;
-                        myBooking.customerID = UserID;
-                        myBooking.dateFrom = DateFrom;
-                        myBooking.dateTo = DateTo;
-                        myBooking.note = "Booked";
-
-
-                        //myBooking.customer = getUser();
-                        //myBooking.rooms = theRoom;
-
-                        db.bookings.Add(myBooking);
-                        db.SaveChanges();
-
-                        Response.Redirect("CheckBooking.aspx");
-
-
-                        break;
-              
-                    case MessageBoxResult.Cancel:
-
-                        MessageBox.Show("Do you want to book another?", "Delete");
-                        Response.Redirect("CreateBooking.aspx");
-
-                        break;
+                    if (r.beds == NBeds && r.size.Equals(Size.ToString().ToLower()))
+                    {
+                        avroms.Add(r);
+                    }
                 }
 
+
+
+                foreach (bookings b in listOfBookings)
+                {
+                    foreach (rooms r in avroms)
+                    {
+                        if (b.roomID == r.roomID)
+                        {
+                            DateTime tmpTo = new DateTime();
+                            DateTime tmpFrom = new DateTime();
+
+                            tmpTo = Convert.ToDateTime(b.dateTo);
+                            tmpFrom = Convert.ToDateTime(b.dateFrom);
+
+                            if (DateFrom >= tmpTo && DateTo <= tmpFrom)
+                            {
+                                avroms.Remove(r);
+                            }
+                        }
+                    }
+                }
+
+                rooms theRoom = new rooms();
+
+                if (avroms.Count() != 0)
+                {
+                    theRoom = avroms.First();
+                    roomCheck = true;
+
+                }
+                else
+                {
+                    MessageBoxResult failed = MessageBox.Show("No available rooms that match your preferences. Try again.", "Not available", MessageBoxButton.OK);
+
+                    switch (failed)
+                    {
+                        case MessageBoxResult.OK:
+                            Response.Redirect("CreateBooking.aspx");
+                            break;
+                    }
+
+
+                }
+
+                // Last opp til DB
+
+
+                if (roomCheck)
+                {
+
+
+
+                    MessageBoxResult booked = MessageBox.Show("Hello " + FirstName + " " + LastName + " This room suits your preferences: " + showRoom(theRoom) + ". Do you want to book it? ", "Booked Room", MessageBoxButton.OKCancel);
+
+
+                    switch (booked)
+                    {
+                        case MessageBoxResult.OK:
+
+                            myBooking = new bookings();
+
+                            myBooking.roomID = theRoom.roomID;
+                            myBooking.customerID = UserID;
+                            myBooking.dateFrom = DateFrom;
+                            myBooking.dateTo = DateTo;
+                            myBooking.note = "Booked";
+
+
+                            //myBooking.customer = getUser();
+                            //myBooking.rooms = theRoom;
+
+                            db.bookings.Add(myBooking);
+                            db.SaveChanges();
+
+                            Response.Redirect("CheckBooking.aspx");
+
+
+                            break;
+
+                        case MessageBoxResult.Cancel:
+
+                            MessageBox.Show("Do you want to book another?", "Delete");
+                            Response.Redirect("CreateBooking.aspx");
+
+                            break;
+                    }
+
+
+                }
 
             }
             // }
