@@ -1,0 +1,71 @@
+﻿<Page
+    x:Class="MaintenanceApp.Maintenance"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MaintenanceApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Page.Resources>
+        <Thickness x:Key="tbMargin">0,10,0,0</Thickness>
+    </Page.Resources>
+    <Grid>
+        <Grid Name="myGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="1"  
+                   Text="Maintenance" 
+                   HorizontalAlignment="Center" 
+                   TextAlignment="Center"
+                   FontSize="25"/>
+            <Grid Name="StackPanelGrid" Grid.Row="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                    <ColumnDefinition Width="250"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <ListView x:Name="MaintenanceList" IsItemClickEnabled="True" ItemsSource="{Binding}"  HorizontalContentAlignment="Stretch" Grid.ColumnSpan="1" Margin="0,0,0,0">
+                    <ListView.HeaderTemplate>
+                        <DataTemplate>
+                            <Grid MaxWidth="800">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" TextAlignment="Center" Text="Room Number" />
+                                <TextBlock Grid.Column="1" TextAlignment="Center" Text="Note" />
+                                <TextBlock Grid.Column="2" TextAlignment="Center" Text="Status" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.HeaderTemplate>
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <Grid Width="800">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                                    <ColumnDefinition Width="*" ></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" TextAlignment="Center" Text="{Binding roomID}" />
+                                <TextBlock Grid.Column="1" TextAlignment="Center" Text="{Binding note}" />
+                                <DropDownButton Grid.Column="2" Width="100" Content="{Binding serviceStatus}">
+                                    <DropDownButton.Flyout>
+                                        <MenuFlyout Placement="Bottom">
+                                            <MenuFlyoutItem Tag="{Binding serviceID}" Click="Update_Click" Text="NEW"/>
+                                            <MenuFlyoutItem Tag="{Binding serviceID}" Click="Update_Click" Text="ACTIVE"/>
+                                            <MenuFlyoutItem Tag="{Binding serviceID}" Click="Update_Click" Text="FINISHED"/>
+                                        </MenuFlyout>
+                                    </DropDownButton.Flyout>
+                                </DropDownButton>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
